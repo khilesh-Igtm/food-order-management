@@ -387,7 +387,7 @@ describe("GET /api/orders/[id]", () => {
     vi.mocked(prisma.order.findUnique).mockResolvedValue(deliveryOrder as never);
     vi.mocked(prisma.order.update).mockResolvedValue({
       ...deliveryOrder,
-      status: "DELIVERED" as never,
+      status: OrderStatus.DELIVERED,
     } as never);
 
     const request = new Request("http://localhost:3000/api/orders/order-123");
@@ -400,7 +400,7 @@ describe("GET /api/orders/[id]", () => {
     expect(data.status).toBe("DELIVERED");
     expect(prisma.order.update).toHaveBeenCalledWith({
       where: { id: "order-123" },
-      data: { status: "DELIVERED" },
+      data: { status: OrderStatus.DELIVERED },
     });
   });
 
@@ -408,7 +408,7 @@ describe("GET /api/orders/[id]", () => {
     vi.setSystemTime(new Date("2026-02-01T14:05:00Z"));
     const deliveredOrder = {
       ...mockOrderWithItems,
-      status: "DELIVERED" as never,
+      status: OrderStatus.DELIVERED,
     };
     vi.mocked(prisma.order.findUnique).mockResolvedValue(deliveredOrder as never);
 

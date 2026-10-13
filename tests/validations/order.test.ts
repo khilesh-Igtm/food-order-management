@@ -283,6 +283,7 @@ describe("Order Validation Schemas", () => {
         OrderStatus.ORDER_RECEIVED,
         OrderStatus.PREPARING,
         OrderStatus.OUT_FOR_DELIVERY,
+        OrderStatus.DELIVERED,
       ];
 
       for (const status of validStatuses) {
@@ -296,7 +297,6 @@ describe("Order Validation Schemas", () => {
 
     it("rejects unsupported and invalid statuses", () => {
       const invalidStatuses = [
-        "DELIVERED",
         "CANCELLED",
         "PENDING",
         "order_received",

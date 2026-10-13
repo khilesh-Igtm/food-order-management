@@ -176,12 +176,7 @@ describe("End-to-End Customer Journey Integration", () => {
       );
     });
 
-    // 7. Verify automatic redirect to Order Tracking page (/orders/[id])
-    await waitFor(() => {
-      expect(pushMock).toHaveBeenCalledWith("/orders/order-journey-12345");
-    });
-
-    // Verify confirmation banner with order reference and tracking button
+    // 7. Verify confirmation banner with order reference and tracking button
     expect(await screen.findByText(/order confirmed/i)).toBeInTheDocument();
     expect(screen.getByText(/order-journey-12345/i)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /track order live/i })).toHaveAttribute(

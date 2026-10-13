@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { createOrderSchema } from "@/lib/validations/order";
 
@@ -18,7 +17,6 @@ interface CheckoutFormProps {
 }
 
 export function CheckoutForm({ onSuccess, onCancel }: CheckoutFormProps) {
-  const router = useRouter();
   const { items, clearCart } = useCart();
 
   const [customerName, setCustomerName] = useState("");
@@ -106,7 +104,6 @@ export function CheckoutForm({ onSuccess, onCancel }: CheckoutFormProps) {
       clearCart();
       setConfirmedOrder(data);
       onSuccess?.(data);
-      router.push(`/orders/${data.id}`);
     } catch {
       setErrors({
         general: "A network error occurred while placing your order.",

@@ -44,9 +44,8 @@ export async function GET(
     const createdTime = new Date(order.createdAt).getTime();
     const elapsedSeconds = (now - createdTime) / 1000;
 
-    type OrderProgressStatus = OrderStatus | "DELIVERED";
-    let currentStatus: OrderProgressStatus = order.status;
-    let newStatus: OrderProgressStatus = currentStatus;
+    let currentStatus: OrderStatus = order.status;
+    let newStatus: OrderStatus = currentStatus;
 
     if (currentStatus === "ORDER_RECEIVED" && elapsedSeconds > 30) {
       if (elapsedSeconds > 90) {
@@ -69,7 +68,7 @@ export async function GET(
     if (newStatus !== currentStatus) {
       await prisma.order.update({
         where: { id: order.id },
-        data: { status: newStatus as OrderStatus },
+        data: { status: newStatus },
       });
       currentStatus = newStatus;
     }
